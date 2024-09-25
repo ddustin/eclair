@@ -686,6 +686,8 @@ private class InteractiveTxBuilder(replyTo: ActorRef[InteractiveTxBuilder.Respon
       case Some(output) => output
       case None =>
         log.warn("invalid interactive tx: funding outpoint not included")
+        val tx = sharedTx.buildUnsignedTx()
+        log.warn("the tx: {}", tx.toString())
         return Left(InvalidCompleteInteractiveTx(fundingParams.channelId))
     }
 
